@@ -4,17 +4,28 @@ var db   = require('../config/database')
 
 //register route
 exports.postRegister = function(req, res) {
-  if (!req.body.name || !req.body.password) {
+  if (!req.body.email || !req.body.password) {
     res.json({success: false, msg: 'email and password required.'});
   } else {
     var newUser = new db.userModel({
-      name: req.body.name,
-      password: req.body.password
+      email: req.body.email,
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      occupation: req.body.occupation,
+      numChildren: req.body.numChildren,
+      childDOB: req.body.childDOB,
+      childSex: req.body.childSex,
+      phone: req.body.phone,
+      zip: req.body.zip,
+      mailingList: req.body.mailingList,
+      imgUrl: req.body.imgUrl,
+      admin: false
     });
     // save the user
     newUser.save(function(err) {
       if (err) {
-        return res.json({success: false, msg: 'Username already exists.'});
+        return res.json({success: false, msg: 'Email already exists.'});
       }
       res.json({success: true, msg: 'Successful created new user.'});
     });
@@ -23,7 +34,7 @@ exports.postRegister = function(req, res) {
 
 exports.postAuthenticate = function(req, res) {
   db.userModel.findOne({
-    name: req.body.name
+    email: req.body.email
   }, function(err, user) {
     if (err) throw err;
  

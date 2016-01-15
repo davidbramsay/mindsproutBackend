@@ -67,6 +67,9 @@ app.post('/register', basic_routes.postRegister);
 ///////////////////////////user routes (SSL and verified user, processed data)
 
 //book list
+userRoutes.get('/bookList', user_routes.getBookList);
+userRoutes.post('/bookList', user_routes.postBookList);
+
 
 /////////////////////////test user routes (return direct from DB for user)
 
@@ -74,7 +77,7 @@ app.post('/register', basic_routes.postRegister);
 
 
 userRoutes.get('/test', function(req,res){
-    console.log(req.user.name);
+    console.log(req.user.email);
     res.json({here: 'you made it'});
 });
 
