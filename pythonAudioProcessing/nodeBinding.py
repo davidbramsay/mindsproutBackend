@@ -46,6 +46,7 @@ class audioInterface(object):
     def testTimeout(self):
         time.sleep(120);
         return "finished timeout test"
+
 """
 potential future:
     return audio waveform shape for plotting

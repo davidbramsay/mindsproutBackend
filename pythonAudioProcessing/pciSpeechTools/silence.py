@@ -39,11 +39,11 @@ def silenceStatistics(audioArray, fs=44100.0, thresh=0.1, minTime=0.5):
                         silenceArray.append( counter/float(fs) )
                     counter = 0
 
-            returnArray.append("mean time silence: " + str(np.mean(silenceArray)) + " sec")
-            returnArray.append("num silences: " + str(len(silenceArray)))
-            returnArray.append("avg num silences per min: " + str(60*(len(silenceArray) / (len(sil)/float(fs)))))
-            returnArray.append("longest silence: " + str(np.max(silenceArray)) + " sec")
-            returnArray.append("shortest silence: " + str(np.min(silenceArray)) + " sec")
+            returnArray.append({'dataLabel': 'avgLength', 'dataValue': float(np.mean(silenceArray)),'dataUnits': 'sec'})
+            returnArray.append({'dataLabel': 'numSilences', 'dataValue': int(len(silenceArray)),'dataUnits': 'count'})
+            returnArray.append({'dataLabel': 'avgNumSilencesPerMin', 'dataValue': float(60*(len(silenceArray) / (len(sil)/float(fs)))),'dataUnits': 'count'})
+            returnArray.append({'dataLabel': 'longestSilence', 'dataValue': float(np.max(silenceArray)),'dataUnits': 'sec'})
+            returnArray.append({'dataLabel': 'shortestSilence', 'dataValue': float(np.min(silenceArray)),'dataUnits': 'sec'})
     else:
         counter = 0
         silenceArray = []
@@ -55,11 +55,11 @@ def silenceStatistics(audioArray, fs=44100.0, thresh=0.1, minTime=0.5):
                     silenceArray.append( counter/float(fs) )
                 counter = 0
 
-        returnArray.append("mean time silence: " + str(np.mean(silenceArray)))
-        returnArray.append("num silences: " + str(len(silenceArray)))
-        returnArray.append("num silences per min: " + str(60*(len(silenceArray) / (len(silence)/float(fs)))))
-        returnArray.append("longest silence: " + str(np.max(silenceArray)))
-        returnArray.append("shortest silence: " + str(np.min(silenceArray)))
+        returnArray.append({'dataLabel': 'avgLength', 'dataValue': float(np.mean(silenceArray)),'dataUnits': 'sec'})
+        returnArray.append({'dataLabel': 'numSilences', 'dataValue': int(len(silenceArray)),'dataUnits': 'count'})
+        returnArray.append({'dataLabel': 'avgNumSilencesPerMin', 'dataValue': float(60*(len(silenceArray) / (len(silence)/float(fs)))),'dataUnits': 'count'})
+        returnArray.append({'dataLabel': 'longestSilence', 'dataValue': float(np.max(silenceArray)),'dataUnits': 'sec'})
+        returnArray.append({'dataLabel': 'shortestSilence', 'dataValue': float(np.min(silenceArray)),'dataUnits': 'sec'})
 
     return returnArray
 

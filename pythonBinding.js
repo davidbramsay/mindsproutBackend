@@ -9,15 +9,14 @@ client.invoke("verifyLink", "testing string", function(err, reply, streaming) {
     console.log(reply);
 });
 
-
+/*
 client.invoke("testTimeout", function(err, reply, streaming) {
     if(err) { console.log("ERROR: ", err); }
     console.log(reply);
 });
+*/
 
-/*
 client.invoke("processSilence", "id", "../audioUploads/emily.wav", function(err, reply, streaming) {
     if(err) { console.log("ERROR: ", err); }
     console.log(reply);
 });
-*/
