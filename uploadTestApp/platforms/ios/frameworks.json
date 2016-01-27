@@ -1,0 +1,6 @@
+{
+    "SystemConfiguration.framework": 1,
+    "AudioToolbox.framework": 2,
+    "AddressBook.framework": 1,
+    "AddressBookUI.framework": 1
+}

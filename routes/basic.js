@@ -1,8 +1,44 @@
 var db   = require('../config/database')
 , jwt    = require('jwt-simple')
+, getIP  = require('ipware')().get_ip
 , secret = require('../config/secret').secret;
 
-//register route
+
+exports.engagementMiddleware = function(req, res, next){
+
+    if (typeof(req.user) == 'undefined') req.user = {};
+
+    var postData = {};
+    var ip = getIP(req).clientIp;
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
+    if (req.method=="POST") postData = req.body;
+
+    var newEngagement = new db.engagementModel({
+      user_id: req.user._id,
+      ipAddress: ip,
+      url: fullUrl,
+      action: req.method,
+      postData: postData
+    });
+    //log the engagement
+    newEngagement.save(function(err) {
+      if (err) {
+          console.log('ERROR: engagement middleware db write failed');
+          next();
+      }
+      console.log('LOG: user ' + req.user._id +' from ipAddress: ' + ip + ': ' + req.method + ' ' + fullUrl);
+      next();
+    });
+
+    next();
+}
+
+
+
+
+
+
 exports.postRegister = function(req, res) {
   if (!req.body.email || !req.body.password) {
     res.json({success: false, msg: 'email and password required.'});

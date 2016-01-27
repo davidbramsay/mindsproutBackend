@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>MindSprout</title>
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/jquery.animate-enhanced.min.js"></script>
+        <script type="text/javascript">
+        /* This code prevents users from dragging/scrolling the page */
+            var preventDefaultScroll = function(event) {
+                event.preventDefault();
+                window.scroll(0,0);
+                return false;
+            };
+            document.addEventListener('touchmove', preventDefaultScroll, false);
+        </script>
+    </head>
+    <body>
+        <div id="icon">
+            <img id="mainlogo" src="img/logo.png" width="100%" hidden />
+            <div id="page1">
+                <div id="instructions" hidden>
+                    <span>
+                        Welcome to Mindsprout! Powered by Parents, Boosted by Science. 
+                        <br><br> 
+                        Please enter your email below to log in:
+                    </span>
+                    <div id="inputHolder">
+                        <input type="text" id="email" /> 
+                    </div>
+                    <button id="emailSubmit">Submit</button>
+                </div>
+            </div>
+            <div id="page2" hidden>
+                <span>
+                    We're excited to deliver personalized guidance to help you make the most out of your precious time with your child.  
+                    <br><br>
+                    To get started, click 'record' below while you play or read with your child for 10-15 minutes. Don't forget to 'stop' when you're done!
+                </span>
+                <div id="status" class="status blink">RECORDING...</div>
+                <button id="recordStop">Record</button>
+            </div>
+            <div id="page3" hidden>
+                <span>
+                    Thanks for recording!  If you're done, please click 'finish' below to start the Mindsprout analysis engine.  
+                </span>
+                <div id="statusUpload" class="status blink">Analyzing...</div>
+                <!--<button id="upload">Finish</button>
+                <br>
+                <button id="playBack">listen back</button>-->
+            </div>
+            <div id="page4" hidden>
+                <span>
+                    Congrats!  The Mindsprout engine is humming away, analyzing your play session and preparing tailor-made recommendations just for you and your child.  
+                    <br><br>
+                    Please watch your inbox for an email from Mindsprout with the final analysis. You can expect the email to arrive in the next 2-3 days.
+                </span>
+                <button id="reRecord">re-record</button>
+                <div id="footer">
+                    <span>
+                    Contact help@mindsprout.co for questions or concerns.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div id="notifications"></div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+         
+    </body>
+</html>

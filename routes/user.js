@@ -14,7 +14,10 @@ exports.middleware = function(req, res, next){
 
  var token = getToken(req.headers);
  if (token) req.user = jwt.decode(token, secret);
- else res.json({success: false, msg: 'unable to decode token'})
+ else {
+     console.log('jwt middleware auth error');
+     res.json({success: false, msg: 'unable to decode token'});
+ }
 
  //should be unnecessary, double checking- after token verification against db
  //for full entry- that we can again find an entry that matches the decoded email

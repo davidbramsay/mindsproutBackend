@@ -1,11 +1,13 @@
 var express     = require('express')
 , app           = express()
+, expressWs     = require('express-ws')(app)
 , bodyParser    = require('body-parser')
 , morgan        = require('morgan')
 , mongoose      = require('mongoose')
 , passport      = require('passport')
 , db            = require('./config/database') 
 , secret        = require('./config/secret').secret
+, uploads       = require('./config/uploads').uploads
 , user_routes   = require('./routes/user')
 , basic_routes  = require('./routes/basic')
 , jwt           = require('jwt-simple');
@@ -46,13 +48,21 @@ app.use(ensureSec);
 */
 
 
-// bundle our routes
-var userRoutes = express.Router();
-app.use('/user', userRoutes);
+
 
 //authenticate all user routes with passport middleware, decode JWT to see
 //which user it is and pass it to following routes as req.user
-userRoutes.use('/*', passport.authenticate('jwt', {session:false}), user_routes.middleware);
+app.use('/user', passport.authenticate('jwt', {session:false}), user_routes.middleware);
+
+//parse multipart/form-data
+app.use('/user/upload', uploads);
+
+//store info on site usage- log with ID if userRoute
+app.use('/', basic_routes.engagementMiddleware);
+
+// bundle our user routes
+var userRoutes = express.Router();
+app.use('/user', userRoutes);
 
 
 //////////////////////////////generic routes (SSL but no token/verified user)
@@ -72,8 +82,13 @@ userRoutes.post('/bookList', user_routes.postBookList);
 
 
 /////////////////////////test user routes (return direct from DB for user)
-
-
+/*
+app.ws('/echo', function(ws, req) {
+  ws.on('message', function(msg) {
+    ws.send(msg);
+  });
+});
+*/
 
 
 userRoutes.get('/test', function(req,res){
@@ -81,9 +96,11 @@ userRoutes.get('/test', function(req,res){
     res.json({here: 'you made it'});
 });
 
-
-
-
+userRoutes.post('/upload', function(req,res){
+        console.log(req.files[0].path);
+        console.log(req.user._id);
+        res.status(204).end("File uploaded.");
+});
 
 
 // Start the server

@@ -1,0 +1,51 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        },
+        "nl.x-services.plugins.insomnia": {
+            "PACKAGE_NAME": "com.mindsprout.pilot"
+        }
+    },
+    "dependent_plugins": {}
+}

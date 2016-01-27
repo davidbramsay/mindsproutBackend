@@ -9,13 +9,15 @@ module.exports = function(passport) {
   opts.secretOrKey = secret;
   passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     db.userModel.findOne({id: jwt_payload.id}, function(err, user) {
-          if (err) {
-              return done(err, false);
+        if (err) {
+            console.log('passport auth error');
+            return done(err, false);
           }
           if (user) {
-              done(null, user);
+            done(null, user);
           } else {
-              done(null, false);
+            console.log('passport auth error');
+            done(null, false);
           }
       });
   }));
