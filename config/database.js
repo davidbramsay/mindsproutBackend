@@ -54,7 +54,7 @@ var recommendationTypeSchema = new Schema({
 
 var recommendationSchema = new Schema({
     excelId: { type: String, required: true, unique: true },
-    recommendationType_id: { type: Schema.Types.ObjectId, ref: 'recommendationTypeSchema', required: true },
+    recommendationType_id: { type: Schema.Types.ObjectId, ref: 'RecommendationType', required: true },
     recTitle: { type: String },
     weeklyWin: { type: Number },
     inAge: { type: String },
@@ -65,17 +65,17 @@ var recommendationSchema = new Schema({
 });
 
 var recordingSchema = new Schema({
-    user_id: { type: Schema.Types.ObjectId, ref: 'userSchema', required: true },
+    user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     uploadDate: { type: Date, required: true, default: Date.now },
     location: { type: String },
-    book_id: { type: Schema.Types.ObjectId, ref: 'bookSchema' },
+    book_id: { type: Schema.Types.ObjectId, ref: 'Book' },
     removeDate: { type: Date }
 });
 
 var recordingMetadataSchema = new Schema({
-    user_id: { type: Schema.Types.ObjectId, ref: 'userSchema', required: true },
-    recording_id: { type: Schema.Types.ObjectId, ref: 'recordingSchema', required: true },
-    recommendationType_id: { type: Schema.Types.ObjectId, ref: 'recommendationTypeSchema', required: true },
+    user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    recording_id: { type: Schema.Types.ObjectId, ref: 'Recording', required: true },
+    recommendationType_id: { type: Schema.Types.ObjectId, ref: 'RecommendationType', required: true },
     createDate: {type: Date, required: true, default: Date.now },
     updateDates: [{type: Date}],
     dataLabel: { type: String, required: true },
@@ -86,15 +86,15 @@ var recordingMetadataSchema = new Schema({
 });
 
 var recommendationHistorySchema = new Schema({
-    user_id: { type: Schema.Types.ObjectId, ref: 'userSchema', required: true },
+    user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     shownDate: { type: Date, required: true, default: Date.now },
-    recording_id: { type: Schema.Types.ObjectId, ref: 'recordingSchema' },
-    recommendation_ids: [{ type: Schema.Types.ObjectId, ref: 'recommendationSchema' }],
-    recordingMetadata_ids: [{ type: Schema.Types.ObjectId, ref: 'recordingMetadataSchema' }]
+    recording_id: { type: Schema.Types.ObjectId, ref: 'Recording' },
+    recommendation_ids: [{ type: Schema.Types.ObjectId, ref: 'Recommendation' }],
+    recordingMetadata_ids: [{ type: Schema.Types.ObjectId, ref: 'RecordingMetadata' }]
 });
 
 var engagementSchema = new Schema({
-    user_id: { type: Schema.Types.ObjectId, ref: 'userSchema' },
+    user_id: { type: Schema.Types.ObjectId, ref: 'User' },
     date: { type: Date, required: true, default: Date.now },
     ipAddress: { type: String },
     url: { type: String, required: true },

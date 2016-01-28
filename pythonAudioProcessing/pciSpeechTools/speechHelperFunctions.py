@@ -28,11 +28,11 @@ def wavSamples(wave_file):
     # convert binary chunks to short
     a = struct.unpack("%ih" % (w.getnframes()* w.getnchannels()), astr)
     a = [float(val) / pow(2, 15) for val in a]
-    
+
     anew = []
     for ind in range(w.getnchannels()):
         anew.append(a[ind::w.getnchannels()])
-    
+
     return np.array(anew)
 
 
@@ -68,7 +68,7 @@ def wavSamplesNextFrame(wavFile=None, chunk=None, overlap=None):
     anew = []
     for ind in range(wavSamplesNextFrame.w.getnchannels()):
         anew.append(a[ind::wavSamplesNextFrame.w.getnchannels()])
-    
+
     return np.array(anew)
 
 
@@ -92,12 +92,18 @@ def normalize(audioArray):
         normAudio = (audioArray/float(maxVal))
     return normAudio
 
+def monoize(audioArray):
+    #return numpy, 1-d (mono) array from mono or stereo or n-channel inputs
+    if isinstance(audioArray[0], (list, tuple, np.ndarray)):
+        return np.asarray(audioArray).sum(axis=0)
+    return np.asarray(audioArray)
+
 
 def peakDetect(v, delta, x = None):
     #returns object with [0]=maxind,[1]=maxval,[2]=minind,[3]=minval
     maxtab = []
     mintab = []
-    
+
     if x is None:
         x = np.arange(len(v))
     v = np.asarray(v)
@@ -107,12 +113,12 @@ def peakDetect(v, delta, x = None):
         sys.exit('Input argument delta must be a scalar')
     if delta <= 0:
         sys.exit('Input argument delta must be positive')
-    
+
     mn, mx = np.Inf, -np.Inf
     mnpos, mxpos = np.NaN, np.NaN
 
     lookformax = True
-    
+
     for i in np.arange(len(v)):
         this = v[i]
         if this > mx:
@@ -121,7 +127,7 @@ def peakDetect(v, delta, x = None):
         if this < mn:
             mn = this
             mnpos = x[i]
-        
+
         if lookformax:
             if this < mx-delta:
                 maxtab.append((mxpos, mx))
@@ -139,7 +145,12 @@ def peakDetect(v, delta, x = None):
     ymax = [m[1] for m in maxtab]
     xmin = [m[0] for m in mintab]
     ymin = [m[1] for m in mintab]
-    
+
 
 
     return np.array(xmax), np.array(ymax), np.array(xmin), np.array(ymin)
+
+if __name__ == "__main__":
+    a = [[0,1,2,3],[5,6,7,8]]
+    print monoize(a)
+

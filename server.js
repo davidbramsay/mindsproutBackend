@@ -1,12 +1,12 @@
 var express     = require('express')
 , app           = express()
+, db            = require('./config/database')
+, secret        = require('./config/secret').secret
 , expressWs     = require('express-ws')(app)
 , bodyParser    = require('body-parser')
 , morgan        = require('morgan')
 , mongoose      = require('mongoose')
 , passport      = require('passport')
-, db            = require('./config/database') 
-, secret        = require('./config/secret').secret
 , uploads       = require('./config/uploads').uploads
 , user_routes   = require('./routes/user')
 , basic_routes  = require('./routes/basic')
@@ -90,17 +90,24 @@ app.ws('/echo', function(ws, req) {
 });
 */
 
+//upload audio route and handle metadata
+userRoutes.post('/upload', user_routes.postUpload);
 
+//route to get all available raw audio analysis information for user
+userRoutes.get('/metadata', user_routes.getMetadata);
+
+//route to get all available audio analysis, by uploaded file, with recommendations
+userRoutes.get('/data', user_routes.getRecordingData);
+
+//route to get only info on latest recording, false if no data is available for latest recording
+userRoutes.get('latest', user_routes.getLatestRecordingData);
+
+//test authentication route
 userRoutes.get('/test', function(req,res){
     console.log(req.user.email);
     res.json({here: 'you made it'});
 });
 
-userRoutes.post('/upload', function(req,res){
-        console.log(req.files[0].path);
-        console.log(req.user._id);
-        res.status(204).end("File uploaded.");
-});
 
 
 // Start the server

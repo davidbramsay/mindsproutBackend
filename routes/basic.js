@@ -31,7 +31,6 @@ exports.engagementMiddleware = function(req, res, next){
       next();
     });
 
-    next();
 }
 
 
